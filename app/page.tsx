@@ -3,6 +3,7 @@ import getStripe from "@/utils/get-stripe";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Head from "next/head";
 import { Container, AppBar, Typography, Button, Toolbar, Box, Grid } from "@mui/material";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -16,8 +17,12 @@ export default function Home() {
         <Toolbar>         
           <Typography variant="h6" style={{flexGrow: 1}}>Flashcard Saas</Typography>
           <SignedOut>
-            <Button color="inherit">Login</Button>
-            <Button color="inherit">Sign Up</Button>
+            <Link href="/sign-in">
+              <Button sx={{color: "white"}}>Sign In</Button>
+            </Link>
+            <Link href="/sign-up">
+              <Button sx={{color: "white"}}>Sign Up</Button>
+            </Link>
           </SignedOut>
           <SignedIn>
             <UserButton />
