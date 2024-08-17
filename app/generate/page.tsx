@@ -23,9 +23,14 @@ import { collection, doc, getDoc, writeBatch } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+interface Flashcard {
+  front: string;
+  back: string;
+}
+
 export default function Generate() {
   const { isLoaded, isSignedIn, user } = useUser();
-  const [flashcards, setFlashcards] = useState([]);
+  const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
   const [flipped, setFlipped] = useState([]);
   const [text, setText] = useState("");
   const [name, setName] = useState("");
@@ -44,7 +49,7 @@ export default function Generate() {
   };
 
   const handleCardClick = (id: number) => {
-    setFlipped((prev) => ({
+    setFlipped((prev: any) => ({
       ...prev,
       [id]: !prev[id],
     }));
@@ -64,21 +69,26 @@ export default function Generate() {
       return;
     }
 
+    if (!user) {
+      alert("Please sign in to save flashcards");
+      return;
+    }
+
     const batch = writeBatch(db);
-    const userDocRef = doc(collection(db, "users", user.id));
+    const userDocRef = doc(collection(db, "users"), user.id);
     const docSnap = await getDoc(userDocRef);
 
     if (docSnap.exists()) {
       const collections = docSnap.data().flashcards || [];
-      if (collections.find((f: any) => flashcards.name === name)) {
+      if (collections.find((f: any) => f.name === name)) {
         alert("Name already exists");
         return;
       } else {
-        collections.push(name);
+        collections.push({name});
         batch.set(userDocRef, { flashcards: collections }, { merge: true });
       }
     } else {
-      batch.set(userDocRef, { flashcards: [name] });
+      batch.set(userDocRef, { flashcards: [{name}] });
     }
     const colRef = collection(userDocRef, name);
     flashcards.forEach((flashcard) => {
