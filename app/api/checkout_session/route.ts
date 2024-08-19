@@ -6,7 +6,7 @@ const formatAmountForStripe = (amount: number) => {
   return Math.round(amount * 100);
 };
 
-export async function GET(req) {
+export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
   const session_id = searchParams.get("session_id");
 
