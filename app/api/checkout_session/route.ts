@@ -10,6 +10,10 @@ export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
   const session_id = searchParams.get("session_id");
 
+  if (!session_id) {
+    return NextResponse.json({ error: { message: "Session ID is required" } }, { status: 400 });
+  }
+
   try {
     const checkoutSession = await stripe.checkout.sessions.retrieve(session_id);
     return NextResponse.json(checkoutSession);
