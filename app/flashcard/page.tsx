@@ -27,9 +27,14 @@ import {
   Typography,
 } from "@mui/material";
 
+interface Flashcard {
+  front: string;
+  back: string;
+}
+
 export default function Flashcard() {
   const { isLoaded, isSignedIn, user } = useUser();
-  const [flashcards, setFlashcards] = useState([]);
+  const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
   const [flipped, setFlipped] = useState([]);
 
   const searchParams = useSearchParams();
@@ -51,7 +56,7 @@ export default function Flashcard() {
     getFlashcards();
   }, [user, search]);
 
-  const handleCardClick = (id) => {
+  const handleCardClick = (id: number) => {
     setFlipped((prev: any) => ({
       ...prev,
       [id]: !prev[id],

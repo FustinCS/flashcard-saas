@@ -12,7 +12,7 @@ const ResultPage = () => {
   const session_id = searcHParams.get("session_id");
 
   const [loading, setLoading] = useState(true);
-  const [session, setSession] = useState(null);
+  const [session, setSession] = useState<any | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {

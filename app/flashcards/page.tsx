@@ -18,9 +18,13 @@ import {
   Typography,
 } from "@mui/material";
 
+interface Flashcard {
+  name: string;
+}
+
 export default function Flashcards() {
   const { isLoaded, isSignedIn, user } = useUser();
-  const [flashcards, setFlashcards] = useState([]);
+  const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -43,7 +47,7 @@ export default function Flashcards() {
     return <></>;
   }
 
-  const handleCardClick = (id) => {
+  const handleCardClick = (id: any) => {
     router.push(`/flashcard?id=${id}`);
   };
 
