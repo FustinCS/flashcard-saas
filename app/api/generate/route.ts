@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
             {role: 'system', content: systemPrompt},
             {role: 'user', content: data},
         ],
-        model: "gpt-4o-mini",
+        model: "gpt-4o",
         response_format: {type: 'json_object'},
     })
     try {
