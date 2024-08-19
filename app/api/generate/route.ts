@@ -28,6 +28,7 @@ Incorporate spaced repetition techniques by creating variations of the same flas
 Feedback & Improvement:
 
 After creating a set of flashcards, review them to ensure accuracy and clarity.
+Limit character to 150 characters per side of the flashcard.
 Only generate 10 flashcards.
 Consider the learner’s feedback to improve and refine future flashcard sets
 
