@@ -82,17 +82,22 @@ const ResultPage = () => {
       {session.payment_status === "paid" ? (
         <>
           <Typography variant="h4"> Thank you for purchasing!</Typography>
-          <Box sx={{mt: 22}}>
+          <Box sx={{ mt: 22 }}>
             <Typography variant="h6">Session ID: {session_id}</Typography>
-            <Typography variant="h6">We have recieved your payment. You will receive an email with the order details shortly.</Typography>
+            <Typography variant="h6">
+              We have recieved your payment. You will receive an email with the
+              order details shortly.
+            </Typography>
           </Box>
         </>
       ) : (
         <>
-            <Typography variant="h4">Payment failed</Typography>
-            <Box sx={{mt: 22}}>
-              <Typography variant="body1">Your payment was not successful. Please try again.</Typography>
-            </Box>
+          <Typography variant="h4">Payment failed</Typography>
+          <Box sx={{ mt: 22 }}>
+            <Typography variant="body1">
+              Your payment was not successful. Please try again.
+            </Typography>
+          </Box>
         </>
       )}
     </Container>

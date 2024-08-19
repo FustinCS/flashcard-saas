@@ -1,8 +1,9 @@
 "use client";
 
 import { db } from "@/firebase";
-import { useUser } from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/nextjs";
 import {
+  AppBar,
   Box,
   Button,
   Card,
@@ -15,8 +16,10 @@ import {
   DialogContentText,
   DialogTitle,
   Grid,
+  Link,
   Paper,
   TextField,
+  Toolbar,
   Typography,
 } from "@mui/material";
 import { collection, doc, getDoc, writeBatch } from "firebase/firestore";
@@ -84,11 +87,11 @@ export default function Generate() {
         alert("Name already exists");
         return;
       } else {
-        collections.push({name});
+        collections.push({ name });
         batch.set(userDocRef, { flashcards: collections }, { merge: true });
       }
     } else {
-      batch.set(userDocRef, { flashcards: [{name}] });
+      batch.set(userDocRef, { flashcards: [{ name }] });
     }
     const colRef = collection(userDocRef, name);
     flashcards.forEach((flashcard) => {
@@ -102,7 +105,32 @@ export default function Generate() {
   };
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="md" sx={{ padding: 2 }}>
+      <AppBar position="static" color="primary">
+        <Toolbar>
+          <Typography variant="h6" style={{ flexGrow: 1 }}>
+            AI Flashcard Generator
+          </Typography>
+          <SignedOut>
+            <Link href="/sign-in">
+              <Button sx={{ color: "black" }}>Sign In</Button>
+            </Link>
+            <Link href="/sign-up">
+              <Button sx={{ color: "black" }}>Sign Up</Button>
+            </Link>
+          </SignedOut>
+          <SignedIn>
+            <div className="flex gap-8">
+              <Button variant="contained">
+                <Link href="/flashcards" sx={{ color: "black" }}>
+                  Saved Flashcards
+                </Link>
+              </Button>
+              <UserButton />
+            </div>
+          </SignedIn>
+        </Toolbar>
+      </AppBar>
       <Box
         sx={{
           mt: 4,
@@ -170,7 +198,6 @@ export default function Generate() {
                             backfaceVisibility: "hidden",
                             display: "flex",
                             justifyContent: "center",
-                            alignItems: "center",
                             padding: 2,
                             boxSizing: "border-box",
                             overflow: "auto",
@@ -182,7 +209,11 @@ export default function Generate() {
                       >
                         <div>
                           <div>
-                            <Typography variant="h5" component="div">
+                            <Typography
+                              variant="h5"
+                              component="div"
+                              sx={{ textAlign: "center" }}
+                            >
                               {flashcard.front}
                             </Typography>
                           </div>
@@ -200,7 +231,7 @@ export default function Generate() {
             ))}
           </Grid>
           <Box sx={{ mt: 4, display: "flex", justifyContent: "center" }}>
-            <Button variant="contained" color="secondary" onClick={handleOpen}>
+            <Button variant="contained" color="primary" onClick={handleOpen}>
               Save
             </Button>
           </Box>

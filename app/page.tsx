@@ -3,7 +3,7 @@ import Image from "next/image";
 import getStripe from "@/utils/get-stripe";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Head from "next/head";
-import { Container, AppBar, Typography, Button, Toolbar, Box, Grid } from "@mui/material";
+import { Container, AppBar, Typography, Button, Toolbar, Box, Grid, createTheme } from "@mui/material";
 import Link from "next/link";
 
 export default function Home() {
@@ -35,33 +35,42 @@ export default function Home() {
 
 
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="xl" sx={{padding: 2}}>
       <Head>
-        <title>Flashcard Saas</title>
+        <title>Ai Flashcard Generator</title>
         <meta name="description" content="Create flashcard from your text" />
       </Head>
 
-      <AppBar position="static">
+      <AppBar position="static" color="primary">
         <Toolbar>         
-          <Typography variant="h6" style={{flexGrow: 1}}>Flashcard Saas</Typography>
+          <Typography variant="h6" style={{flexGrow: 1}}>AI Flashcard Generator</Typography>
           <SignedOut>
             <Link href="/sign-in">
-              <Button sx={{color: "white"}}>Sign In</Button>
+              <Button sx={{color: "black"}}>Sign In</Button>
             </Link>
             <Link href="/sign-up">
-              <Button sx={{color: "white"}}>Sign Up</Button>
+              <Button sx={{color: "black"}}>Sign Up</Button>
             </Link>
           </SignedOut>
           <SignedIn>
-            <UserButton />
+            <div className="flex gap-8">
+              <Button variant="contained">
+                <Link href="/flashcards" className="text-black">
+                    Saved Flashcards
+                </Link>
+              </Button>
+              <UserButton />
+            </div>
           </SignedIn>
         </Toolbar>
       </AppBar>
 
       <Box sx={{textAlign: "center", my: 4}}>
-        <Typography variant="h2" gutterBottom>Welcome to flashcard SaaS</Typography>
+        <Typography variant="h2" gutterBottom>AI Flashcard Generator</Typography>
         <Typography variant="h5" gutterBottom>{' '}The easiest way to make flashcards from your text</Typography>
-        <Button variant="contained" color="primary" sx={{mt: 2}}>Get Started</Button>
+        <Button variant="contained" color="primary" sx={{mt: 2}}>
+          <Link href="/generate">Get Started</Link> 
+        </Button>
       </Box>
       <Box sx={{my:6}}>
         <Typography variant="h4" gutterBottom>Features</Typography>
