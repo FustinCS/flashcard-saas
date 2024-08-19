@@ -58,8 +58,8 @@ export async function POST(req: NextRequest) {
         const flashcards = JSON.parse(completion.choices[0].message.content ?? '');
         return NextResponse.json(flashcards.flashcards);
     } catch (error) {
-        console.error(error);
-        console.error(completion.choices[0].message.content);
+        console.log(error);
+        console.log(completion.choices[0].message.content);
         return NextResponse.error();
     }
 
