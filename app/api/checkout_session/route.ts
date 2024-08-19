@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
@@ -19,7 +19,7 @@ export async function GET(req) {
   }
 }
 
-export async function POST(req: { headers: { origin: any; }; }) {
+export async function POST(req: NextRequest) {
   const params: Stripe.Checkout.SessionCreateParams = {
     mode: 'subscription',
     payment_method_types: ["card"],

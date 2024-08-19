@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
 const systemPrompt = `
@@ -42,7 +42,7 @@ Return in the following JSON format
 }
 `
 
-export async function POST(req: { text: () => any; }) {
+export async function POST(req: NextRequest) {
     const openai = new OpenAI();
     const data = await req.text();
 
